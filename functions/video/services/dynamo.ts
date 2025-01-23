@@ -1,7 +1,6 @@
 import { DynamoDBClient, ReturnValue } from '@aws-sdk/client-dynamodb';
 import {
     DynamoDBDocumentClient,
-    QueryCommand,
     PutCommand,
     DeleteCommand,
     GetCommand,

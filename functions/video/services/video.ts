@@ -25,11 +25,6 @@ export interface VideoOptions {
     outputFormat?: string;
 }
 
-const DEFAULT_RESOLUTION: Resolution = {
-    width: 1920,
-    height: 1080
-};
-
 export interface MergeVideosResult {
     outputKey: string;
     error?: string;

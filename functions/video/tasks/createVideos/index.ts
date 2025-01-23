@@ -1,4 +1,4 @@
-import { createVideo, mergeVideos } from '../../services/video';
+import {createVideo, mergeVideos} from '../../services/video';
 
 export interface ReelEpisode {
     day: number;
