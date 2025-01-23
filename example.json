@@ -1,0 +1,183 @@
+{
+  "id": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c",
+  "tasks": [
+    {
+      "status": "completed",
+      "result": {
+        "id": "reel-1737645722049",
+        "type": "reel-episodes",
+        "content": [
+          {
+            "day": 1,
+            "event": "Лиля прилетела в Бразилию и обнаружила, что её багаж потерян. В этой ситуации она не растерялась и пошла исследовать город в том, что было на ней.",
+            "image_prompt": "LILY, standing confidently in Rio de Janeiro, wearing casual summer clothes with a vibrant cityscape in the background under a golden sunset light, exuding a 'ready for anything' atmosphere.",
+            "voice_narration": "Приезжаю в Бразилию, а мой багаж решил остаться ещё в Европе. Ну, думаю, это знак-с! Пошла штурмовать Рио в том, что есть — это приключение начинается прямо сейчас, как вам такое поведение багажа, а?"
+          },
+          {
+            "day": 2,
+            "event": "Лиля встретила местного жителя, который предложил ей экскурсию на знаменитую Статую Христа. По пути они заблудились и наткнулись на уличный карнавал.",
+            "image_prompt": "LILY, dancing joyfully in the midst of a colorful street carnival in Rio, with festive costumes and vibrant decorations around, under bright daylight, capturing a sense of carefree joy and spontaneity.",
+            "voice_narration": "А вот и новый друг — местный парень, который вроде как знал дорогу до Статуи. Но, внезапно, мы оказались на карнавале! Как говорится, если жизнь подкидывает карнавал, то танцуй без оглядки. Супер-неожиданный поворот!"
+          },
+          {
+            "day": 3,
+            "event": "Она решилась на серфинг и впервые встала на доску, преодолев свои страхи и дождливую погоду.",
+            "image_prompt": "LILY, riding a surfboard amidst the ocean waves, wearing a wetsuit under a slightly cloudy sky with a hint of determination and triumph in her expression.",
+            "voice_narration": "Серфинг всегда казался мне чем-то из области фантастики: волны, страх и куча адреналина. Но ведь кто, если не я, попробует?! Конечно, без падений не обошлось, но, блин, я стояла на этой штуке! Погода не подвела — дождь лишь добавил драматичности."
+          },
+          {
+            "day": 4,
+            "event": "Лиля случайно попала на местный рынок, где попробовала экзотические фрукты и познакомилась с уличными музыкантами.",
+            "image_prompt": "LILY, exploring a bustling local market, tasting vibrant exotic fruits with a background of lively street musicians playing samba, under the warm afternoon sun, showcasing a scene of cultural immersion and discovery.",
+            "voice_narration": "На рынок меня занесло чисто случайно, и это, друзья, отдельное мини-путешествие. Столько экзотики! Вы когда-нибудь пробовали такой фрукт, что язык прокручивается на южные мотивы? А эти музыканты на каждом шагу! Ощущение, как будто внутри какой-то бразильской сказки."
+          },
+          {
+            "day": 5,
+            "event": "В последний день пребывания Лиля сидела на пляже и размышляла о том, что Бразилия изменила её представления о свободе.",
+            "image_prompt": "LILY, sitting contemplatively on a serene Rio beach during sunset, with waves gently lapping the shore and a calm reflective atmosphere, capturing a sense of peace and introspection.",
+            "voice_narration": "Сижу я, значит, на пляже последние часы перед отлётом и думаю — а ведь Бразилия реально меняет всё восприятие. Здесь свобода буквально в воздухе, и кажется, что я нашла какой-то новый кусочек себя. Не могу удержаться, чтобы не пригласить вас в это путешествие со мной. Подписывайтесь, и посмотрим, что дальше!"
+          }
+        ],
+        "createdAt": "2025-01-23T15:22:02.050Z"
+      }
+    },
+    {
+      "status": "completed",
+      "result": {
+        "id": "narrations-1737645743570",
+        "type": "voice-narrations",
+        "content": {
+          "narrations": [
+            {
+              "episodeIndex": 0,
+              "s3Key": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/narrations/reel-1737645722049/episode-1.mp3"
+            },
+            {
+              "episodeIndex": 1,
+              "s3Key": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/narrations/reel-1737645722049/episode-2.mp3"
+            },
+            {
+              "episodeIndex": 2,
+              "s3Key": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/narrations/reel-1737645722049/episode-3.mp3"
+            },
+            {
+              "episodeIndex": 3,
+              "s3Key": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/narrations/reel-1737645722049/episode-4.mp3"
+            },
+            {
+              "episodeIndex": 4,
+              "s3Key": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/narrations/reel-1737645722049/episode-5.mp3"
+            }
+          ],
+          "reelEpisodesId": "reel-1737645722049"
+        },
+        "createdAt": "2025-01-23T15:22:23.570Z"
+      }
+    },
+    {
+      "status": "completed",
+      "result": {
+        "id": "images-1737645781797",
+        "type": "images",
+        "content": {
+          "images": [
+            {
+              "episodeIndex": 0,
+              "s3Keys": [
+                "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/images/reel-1737645722049/episode-1-0.jpg"
+              ]
+            },
+            {
+              "episodeIndex": 1,
+              "s3Keys": [
+                "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/images/reel-1737645722049/episode-2-0.jpg"
+              ]
+            },
+            {
+              "episodeIndex": 2,
+              "s3Keys": [
+                "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/images/reel-1737645722049/episode-3-0.jpg"
+              ]
+            },
+            {
+              "episodeIndex": 3,
+              "s3Keys": [
+                "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/images/reel-1737645722049/episode-4-0.jpg"
+              ]
+            },
+            {
+              "episodeIndex": 4,
+              "s3Keys": [
+                "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/images/reel-1737645722049/episode-5-0.jpg"
+              ]
+            }
+          ],
+          "reelEpisodesId": "reel-1737645722049"
+        },
+        "createdAt": "2025-01-23T15:23:01.797Z"
+      }
+    },
+    {
+      "status": "completed",
+      "result": {
+        "id": "videos-1737645943952",
+        "type": "videos",
+        "content": {
+          "videos": [
+            {
+              "episodeIndex": 0,
+              "s3Key": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/videos/reel-1737645722049/episode-1.mp4"
+            },
+            {
+              "episodeIndex": 1,
+              "s3Key": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/videos/reel-1737645722049/episode-2.mp4"
+            },
+            {
+              "episodeIndex": 2,
+              "s3Key": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/videos/reel-1737645722049/episode-3.mp4"
+            },
+            {
+              "episodeIndex": 3,
+              "s3Key": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/videos/reel-1737645722049/episode-4.mp4"
+            },
+            {
+              "episodeIndex": 4,
+              "s3Key": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/videos/reel-1737645722049/episode-5.mp4"
+            }
+          ],
+          "mergedVideo": {
+            "s3Key": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/videos/reel-1737645722049/merged.mp4"
+          },
+          "reelEpisodesId": "reel-1737645722049"
+        },
+        "createdAt": "2025-01-23T15:25:43.952Z"
+      }
+    },
+    {
+      "status": "completed",
+      "result": {
+        "id": "final-video-1737645944235",
+        "type": "final-video",
+        "content": {
+          "originalVideoKey": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/videos/reel-1737645722049/merged.mp4",
+          "finalVideoKey": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c-final.mp4",
+          "reelEpisodesId": "reel-1737645722049"
+        },
+        "createdAt": "2025-01-23T15:25:44.235Z"
+      }
+    },
+    {
+      "status": "completed",
+      "result": {
+        "id": "random-image-1737645944404",
+        "type": "random-image",
+        "content": {
+          "originalImageKey": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c/images/reel-1737645722049/episode-2-0.jpg",
+          "finalImageKey": "54524ff3-d51f-4e5c-b721-e78c6b26fe3c-thumbnail.jpg",
+          "reelEpisodesId": "reel-1737645722049"
+        },
+        "createdAt": "2025-01-23T15:25:44.404Z"
+      }
+    }
+  ]
+}
