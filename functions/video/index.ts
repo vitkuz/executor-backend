@@ -73,6 +73,10 @@ exports.handler = async () => {
     try {
         console.log('🚀 Starting pipeline execution...');
 
+        // POST request, read event body, look for executionId
+        // if executionId is present then fetch existing execution record
+        //  may be corrupted, so yty to merge tasks with existing tasks
+
         // Create execution record
         const executionId = uuidv4();
         const execution: Execution = {

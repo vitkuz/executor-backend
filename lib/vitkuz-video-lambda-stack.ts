@@ -5,11 +5,12 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as targets from 'aws-cdk-lib/aws-events-targets';
+import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import {Construct} from 'constructs';
 import * as s3n from 'aws-cdk-lib/aws-s3-notifications';
 import * as path from 'path';
-// import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
-// import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import 'dotenv/config'
 
 console.log(
@@ -79,21 +80,48 @@ export class VitkuzVideoLambdaStack extends cdk.Stack {
             ],
         });
 
-        // const distribution = new cloudfront.Distribution(this, 'Distribution', {
-        //     defaultRootObject: 'index.html',
-        //     errorResponses: [
-        //         {
-        //             httpStatus: 404,
-        //             responseHttpStatus: 404,
-        //             responsePagePath: '/index.html',
-        //             ttl: cdk.Duration.minutes(1),
-        //         },
-        //     ],
-        //     defaultBehavior: {
-        //         origin: new origins.S3StaticWebsiteOrigin(reelstagramBucket),
-        //         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-        //     },
-        // });
+        const executionManagerBucket = new s3.Bucket(this, 'ExecutionManagerBucket', {
+            publicReadAccess: true,
+            bucketName: 'executionmanager.travelgig.info',
+            websiteIndexDocument: 'index.html', // Entry point
+            websiteErrorDocument: 'index.html', // Error page
+            blockPublicAccess: new s3.BlockPublicAccess({
+                blockPublicAcls: false,
+                blockPublicPolicy: false,
+                ignorePublicAcls: false,
+                restrictPublicBuckets: false
+            }),
+            removalPolicy: cdk.RemovalPolicy.DESTROY,
+            autoDeleteObjects: true,
+            cors: [
+                {
+                    allowedMethods: [
+                        s3.HttpMethods.GET,
+                        s3.HttpMethods.PUT,
+                        s3.HttpMethods.POST,
+                        s3.HttpMethods.DELETE,
+                    ],
+                    allowedOrigins: ['*'],
+                    allowedHeaders: ['*'],
+                },
+            ],
+        });
+
+        const distribution = new cloudfront.Distribution(this, 'Distribution', {
+            defaultRootObject: 'index.html',
+            errorResponses: [
+                {
+                    httpStatus: 404,
+                    responseHttpStatus: 404,
+                    responsePagePath: '/index.html',
+                    ttl: cdk.Duration.minutes(1),
+                },
+            ],
+            defaultBehavior: {
+                origin: new origins.S3StaticWebsiteOrigin(executionManagerBucket),
+                viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+            },
+        });
 
         // Create DynamoDB table for executions
         const executionsTable = new dynamodb.Table(this, 'ExecutionsTable', {
@@ -160,7 +188,7 @@ export class VitkuzVideoLambdaStack extends cdk.Stack {
             runtime: lambda.Runtime.NODEJS_20_X,
             handler: 'index.handler',
             code: lambda.Code.fromAsset(path.join(__dirname, '../functions/video')),
-            memorySize: 1024,
+            memorySize: 4024,
             timeout: cdk.Duration.seconds(900),
             layers: [ffmpegLayer, sharpLayer, layer],
             logRetention: logs.RetentionDays.ONE_DAY,
@@ -184,6 +212,36 @@ export class VitkuzVideoLambdaStack extends cdk.Stack {
         // Grant the Lambda function permissions to access the DynamoDB table
         executionsTable.grantReadWriteData(ffmpegFunction);
 
+        // Create Executions Lambda function
+        const executionsFunction = new lambda.Function(this, 'ExecutionsFunction', {
+            runtime: lambda.Runtime.NODEJS_20_X,
+            handler: 'index.handler',
+            code: lambda.Code.fromAsset(path.join(__dirname, '../functions/executions')),
+            memorySize: 256,
+            timeout: cdk.Duration.seconds(30),
+            logRetention: logs.RetentionDays.ONE_DAY,
+            environment: {
+                TABLE_NAME: executionsTable.tableName,
+            }
+        });
+
+        // Grant the Executions Lambda function permissions to access the DynamoDB table
+        executionsTable.grantReadData(executionsFunction);
+
+        // Create API Gateway
+        const api = new apigateway.RestApi(this, 'ExecutionsApi', {
+            restApiName: 'Executions Service',
+            description: 'API for retrieving video generation executions',
+            defaultCorsPreflightOptions: {
+                allowOrigins: apigateway.Cors.ALL_ORIGINS,
+                allowMethods: apigateway.Cors.ALL_METHODS
+            }
+        });
+
+        // Create API Gateway resource and method
+        const executions = api.root.addResource('executions');
+        executions.addMethod('GET', new apigateway.LambdaIntegration(executionsFunction));
+        executions.addMethod('POST', new apigateway.LambdaIntegration(ffmpegFunction));
 
         // Create an EventBridge rule for the schedule
         const rule = new events.Rule(this, 'ScheduleRule', {
@@ -202,6 +260,11 @@ export class VitkuzVideoLambdaStack extends cdk.Stack {
         new cdk.CfnOutput(this, 'FunctionArn', {
             value: ffmpegFunction.functionArn,
             description: 'FFmpeg Lambda function ARN'
+        });
+
+        new cdk.CfnOutput(this, 'ApiUrl', {
+            value: api.url,
+            description: 'API Gateway URL'
         });
     }
 }

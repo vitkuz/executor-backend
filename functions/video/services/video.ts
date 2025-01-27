@@ -213,6 +213,31 @@ export async function mergeVideos(
     }
 }
 
+function generateZoomPanFilter(config:any) {
+    const {
+        initialZoom,
+        finalZoom,
+        frames,
+        inputWidth,
+        inputHeight,
+    } = config;
+
+    // Calculate zoom increment per frame
+    const zoomIncrement = (finalZoom - initialZoom) / frames;
+
+    // Center pan position
+    const centerX = 0.5;
+    const centerY = 0.5;
+
+    // Construct the filter string
+    const filterString = `scale=8000:-1,zoompan=z='min(zoom+${zoomIncrement.toFixed(4)},${finalZoom})':d=${frames}:` +
+        `x='(iw-(iw/zoom))*(${centerX})':` +
+        `y='(ih-(ih/zoom))*(${centerY})':` +
+        `s=${inputWidth}x${inputHeight}`;
+
+    return filterString;
+}
+
 function mergeImageAndAudio(
     imagePath: string,
     audioPath: string,
@@ -220,14 +245,35 @@ function mergeImageAndAudio(
     duration: number,
     resolution: Resolution
 ): Promise<string> {
+
+    const fps = 60;
+    const frames = Math.ceil(duration * fps); // Total frames based on audio duration
+    const zoomPanConfig = {
+        initialZoom: 1,
+        finalZoom: 1.5,
+        frames: frames,
+        inputWidth: resolution.width,
+        inputHeight: resolution.height,
+    };
+
+    let zoomPanFilter = generateZoomPanFilter(zoomPanConfig);
+
     return new Promise((resolve, reject) => {
         console.log('  🔄 FFmpeg: Merging image and audio...');
 
         ffmpeg()
             .input(imagePath)
-            .input(audioPath)
-            .outputOptions(`-t ${duration}`)
-            .outputOptions('-vf', `scale=${resolution.width}:${resolution.height}`)
+            .inputOptions(['-loop 1']) // Loop the image for the duration
+            .input(audioPath) // Add audio input
+            .complexFilter([zoomPanFilter]) // Pass the filter as a separate parameter
+            .outputOptions([
+                '-c:v libx264', // Video codec
+                '-pix_fmt yuv420p', // Pixel format
+                `-r ${fps}`, // Frame rate
+                `-t ${duration}`, // Duration based on audio
+                '-c:a aac', // Audio codec
+                '-b:a 192k', // Audio bitrate
+            ])
             .output(outputPath)
             .on('start', (command: string) => {
                 console.log(`  📋 FFmpeg command: ${command}`);
