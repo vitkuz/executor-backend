@@ -130,6 +130,7 @@ exports.handler = async () => {
         execution.endTime = new Date().toISOString();
         await updateRecord(executionId, execution);
         console.log('\n🎉 Pipeline completed successfully!');
+        console.log(JSON.stringify(execution, null, 2));
         return execution;
     } catch (error) {
         console.error('\n❌ Pipeline failed:', error);
